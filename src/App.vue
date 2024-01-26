@@ -3,9 +3,7 @@
   <router-view />
 </template>
 
-<script setup>
-const a = ref(null)
-</script>
+<script setup></script>
 
 <style lang="scss">
 #app {
