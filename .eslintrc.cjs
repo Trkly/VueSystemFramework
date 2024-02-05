@@ -34,6 +34,9 @@ module.exports = {
     'vue/require-default-prop': 'off', // 此规则要求为每个 prop 为必填时，必须提供默认值
     'vue/multi-word-component-names': 'off', // 要求组件名称始终为 “-” 链接的单词
     'vue/no-setup-props-destructure': 'off', // 禁止解构 props 传递给 setup
-    'space-before-function-paren': 0 // 函数名后面不允许有空格
+    'space-before-function-paren': 'off', // 函数名后面不允许有空格
+    // 禁止出现未使用过的变量
+    'no-unused-vars': 'off'
+    // 'vue/no-unused-vars': 'error'
   }
 }

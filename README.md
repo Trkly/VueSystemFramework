@@ -1,24 +1,9 @@
 # imooc-admin
 
-## Project setup
-```
-npm install
-```
+表单校验是表单使用的一个通用能力，在`element-plus`中想要为表单进行表单校验那么我们需要关注以下三点：
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+- 为`el-form` 绑定 `model`属性
+- 为`el-form` 绑定 `rules`属性
+- 为`el-form-item` 绑定 `prop`属性
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+保证以上三点即可为 el-form 绑定`prop`属性

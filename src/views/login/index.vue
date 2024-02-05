@@ -1,25 +1,25 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form">
+    <el-form class="login-form" :model="loginForm" :rules="loginRules">
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
       <!-- username -->
-      <el-form-item>
+      <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon="user"></svg-icon>
         </span>
-        <el-input placeholder="username" name="username" type="text"></el-input>
+        <el-input placeholder="username" name="username" type="text" v-model="loginForm.username"></el-input>
       </el-form-item>
       <!-- password -->
-      <el-form-item>
+      <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon="password"></svg-icon>
         </span>
-        <el-input placeholder="password" name="password"></el-input>
-        <span class="show-pwd">
+        <el-input placeholder="password" name="password" :type="passwordType" v-model="loginForm.password"></el-input>
+        <span class="show-pwd" @click="onChangePwdType">
           <span class="svg-container">
-            <svg-icon icon="eye"></svg-icon>
+            <svg-icon :icon="passwordType === 'password' ? 'eye' : 'eye-open'"></svg-icon>
           </span>
         </span>
       </el-form-item>
@@ -30,9 +30,46 @@
 </template>
 
 <script setup>
-// 导入的组件可以直接使用
-// eslint-disable-next-line no-unused-vars
-import SvgIcon from '@/components/SvgIcon/index'
+import { ref } from 'vue'
+import { validatePassword } from './rules'
+// 数据源
+const loginForm = ref({
+  username: 'super-admin',
+  password: '123456'
+})
+// 验证规则
+/**
+ * trigger:触发器
+ * blur: 失去焦点
+ * change:发生改变
+ * trigger: 'blur'---意思是当表单失去焦点时触发验证规则
+ */
+const loginRules = ref({
+  username: [
+    {
+      required: true,
+      trigger: 'blur',
+      message: '用户名为必填项'
+    }
+  ],
+  password: [
+    {
+      required: true,
+      trigger: 'blur',
+      validator: validatePassword
+    }
+  ]
+})
+
+// 处理密码框文本显示
+const passwordType = ref('password')
+const onChangePwdType = () => {
+  if (passwordType.value === 'password') {
+    passwordType.value = 'text'
+  } else {
+    passwordType.value = 'password'
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -100,7 +137,6 @@ $cursor: #fff;
   .show-pwd {
     position: absolute;
     right: 10px;
-    top: 7px;
     font-size: 16px;
     color: $dark_gray;
     cursor: pointer;
