@@ -5,6 +5,7 @@ import request from '@/utils/request'
  * return promise实例对象
  */
 export const login = data => {
+  console.log(request)
   return request({
     url: '/sys/login',
     method: 'POST',

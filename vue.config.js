@@ -4,6 +4,14 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 module.exports = defineConfig({
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:9000',
+        changeOrigin: true
+      }
+    }
+  },
   transpileDependencies: true,
   chainWebpack(config) {
     config.module
