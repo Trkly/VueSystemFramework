@@ -8,7 +8,10 @@ module.exports = defineConfig({
     proxy: {
       '/api': {
         target: 'http://localhost:9000',
-        changeOrigin: true
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''// 重写请求路径，去掉开头的 '/api'
+        }
       }
     }
   },
