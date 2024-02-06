@@ -7,7 +7,7 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://localhost:9000',
+        target: 'http://localhost:6123',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''// 重写请求路径，去掉开头的 '/api'

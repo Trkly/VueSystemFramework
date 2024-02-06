@@ -7,7 +7,7 @@ import request from '@/utils/request'
 export const login = data => {
   console.log(request)
   return request({
-    url: '/sys/login',
+    url: '/users/login',
     method: 'POST',
     data
   })
