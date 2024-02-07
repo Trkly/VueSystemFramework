@@ -1,16 +1,22 @@
-import { login } from '@/api/users'
+import { login, getUserInfo } from '@/api/users'
 import { setItem, getItem } from '@/utils/storage'
-import { TOKEN } from '@/constant'
+import { TOKEN, USERINFO } from '@/constant'
 import router from '@/router'
 export default {
   namespaced: true,
   state: () => ({
-    token: getItem(TOKEN) || ''
+    token: getItem(TOKEN) || '',
+    userInfo: getItem(USERINFO) || {}
   }),
   mutations: {
     setToken(state, token) {
       state.token = token
       setItem(TOKEN, token)
+    },
+    setUserInfo(state, userInfo) {
+      console.log('我来设置用户信息了', userInfo)
+      state.userInfo = userInfo
+      setItem(USERINFO, userInfo)
     }
   },
   actions: {
@@ -35,6 +41,17 @@ export default {
           reject(err)
         })
       })
+    },
+
+    /**
+     * 获取用户信息
+     * @param {*} context 前后文
+     * @returns 用户信息
+     */
+    async getUserInfo(context) {
+      const res = await getUserInfo()
+      this.commit('user/setUserInfo', res.result)
+      return res
     }
 
   }
