@@ -1,6 +1,7 @@
 import { login } from '@/api/users'
 import { setItem, getItem } from '@/utils/storage'
 import { TOKEN } from '@/constant'
+import router from '@/router'
 export default {
   namespaced: true,
   state: () => ({
@@ -26,8 +27,9 @@ export default {
           username,
           password
         }).then(data => {
-          console.log(data.data.data.result.token)
-          this.commit('user/setToken', data.data.data.result.token)
+          console.log('data:', data.result.token)
+          this.commit('user/setToken', data.result.token)
+          router.push('/')
           resolve()
         }).catch(err => {
           reject(err)

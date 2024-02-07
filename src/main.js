@@ -8,6 +8,9 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import '@/style/index.scss'
 // 导入svgIcon
 import installIcons from '@/icons'
+// 导入路由鉴权
+import './permission'
+
 const app = createApp(App)
 installElementPlus(app)
 installIcons(app)
