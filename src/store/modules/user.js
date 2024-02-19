@@ -1,7 +1,8 @@
 import { login, getUserInfo } from '@/api/users'
-import { setItem, getItem } from '@/utils/storage'
+import { setItem, getItem, removeAllItem } from '@/utils/storage'
 import { TOKEN, USERINFO } from '@/constant'
-import router from '@/router'
+import router, { resetRouter } from '@/router'
+import { setTimeStamp } from '@/utils/auth'
 export default {
   namespaced: true,
   state: () => ({
@@ -36,6 +37,8 @@ export default {
           console.log('data:', data.result.token)
           this.commit('user/setToken', data.result.token)
           router.push('/')
+          // 保存登录时间
+          setTimeStamp()
           resolve()
         }).catch(err => {
           reject(err)
@@ -52,6 +55,18 @@ export default {
       const res = await getUserInfo()
       this.commit('user/setUserInfo', res.result)
       return res
+    },
+
+    /**
+     * 退出登录
+     */
+    logout() {
+      resetRouter()
+      this.commit('user/setToken', '')
+      this.commit('user/setUserInfo', {})
+      removeAllItem()
+      // TODO: 清理掉权限相关配置
+      router.push('/login')
     }
 
   }

@@ -1,7 +1,7 @@
 <template>
-  <div class="app-wrapper">
+  <div class="app-wrapper" :class="[$store.getters.sidebarOpened ? 'openSidebar' : 'hideSidebar']">
     <!-- 左侧 menu -->
-    <Sidebar class="sidebar-container" :style="{ backgroundColor: variables.menuBg }" />
+    <Sidebar class="sidebar-container" :style="{ backgroundColor: $store.getters.cssVar.menuBg }" />
     <div class="main-container">
       <div class="fixed-header">
         <!-- 顶部 navbar -->
@@ -38,5 +38,10 @@ console.log('variables:', variables)
   right: 0;
   z-index: 9;
   width: calc(100% - #{$sideBarWidth});
+  transition: width $sideBarDuration;
+}
+
+.hideSidebar .fixed-header {
+  width: calc(100% - #{$hideSideBarWidth});
 }
 </style>
