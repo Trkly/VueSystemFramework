@@ -6,7 +6,10 @@
       <div class="fixed-header">
         <!-- 顶部 navbar -->
         <Navbar />
+        <!-- tags -->
+        <tags-view />
       </div>
+
       <!-- 内容区 -->
       <AppMain />
     </div>
@@ -16,6 +19,7 @@
 <script setup>
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
+import TagsView from '@/components/TagsView'
 import AppMain from './components/AppMain'
 import variables from '@/style/variables.module.scss'
 console.log('variables:', variables)
