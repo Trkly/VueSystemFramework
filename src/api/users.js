@@ -22,3 +22,13 @@ export const getUserInfo = () => {
     method: 'GET'
   })
 }
+
+/**
+ * 获取用户头像
+ */
+export const feature = () => {
+  return request({
+    url: '/users/feature',
+    method: 'GET'
+  })
+}

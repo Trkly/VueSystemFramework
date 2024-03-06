@@ -12,9 +12,12 @@ import installIcons from '@/icons'
 // 导入路由鉴权
 import './permission'
 
+// filter
+import installFilter from '@/filter'
+
 const app = createApp(App)
 installIcons(app)
-
+installFilter(app)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
