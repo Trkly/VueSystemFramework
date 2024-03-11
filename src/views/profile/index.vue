@@ -38,7 +38,6 @@ const featureData = ref([])
 const getFeatureData = async () => {
   const { data } = await feature()
   featureData.value = data
-  console.log('获取到的数据是:', featureData.value)
 }
 getFeatureData()
 </script>

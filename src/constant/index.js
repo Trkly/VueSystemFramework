@@ -18,3 +18,6 @@ export const DEFAULT_COLOR = '#409eff'
 
 // tags
 export const TAGS_VIEW = 'tagsView'
+
+// useRouter
+export const USE_ROUTER = 'useRouter'

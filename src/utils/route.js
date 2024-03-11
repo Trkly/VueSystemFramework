@@ -4,7 +4,6 @@ const path = require('path')
  * 返回所有子路由
  */
 const getChildrenRoutes = (routes) => {
-  console.log('routes:', routes.value)
   const result = []
   routes.forEach((route) => {
     if (route.children && route.children.length > 0) {
@@ -42,7 +41,6 @@ function isNull(data) {
  * 根据 routes 数据，返回对应 menu 规则数组
  */
 export function generateMenus(routes, basePath = '') {
-  console.log('routes===', routes)
   const result = []
   // 遍历路由表
   routes.forEach((item) => {

@@ -32,7 +32,6 @@ import Fuse from 'fuse.js'
 const router = useRouter()
 const searchPool = computed(() => {
   const fRouters = filterRouters(router.getRoutes())
-  console.log(generateRoutes(fRouters))
   return generateRoutes(fRouters)
 })
 

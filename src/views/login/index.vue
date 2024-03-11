@@ -78,7 +78,6 @@ const store = useStore()
 const loginFormRef = ref(null)
 const handlerLogin = () => {
   // 进行表单校验
-  console.log(loginFormRef.value)
   loginFormRef.value.validate(valid => {
     if (!valid) return
     // 触发登录动作
@@ -90,7 +89,7 @@ const handlerLogin = () => {
         // 进行登录后处理
       })
       .catch(err => {
-        console.log(err)
+        console.log('err==', err)
         loading.value = false
       })
   })

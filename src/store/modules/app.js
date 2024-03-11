@@ -1,22 +1,30 @@
-import { LANG, TAGS_VIEW } from '@/constant/index'
+import { LANG, TAGS_VIEW, USE_ROUTER } from '@/constant/index'
 import { getItem, setItem } from '@/utils/storage'
 export default {
   namespaced: true,
   state: () => ({
     sidebarOpened: true,
     language: getItem(LANG) || 'zh',
-    tagsViewList: getItem(TAGS_VIEW) || []
+    tagsViewList: getItem(TAGS_VIEW) || [],
+    useRouter: []
   }),
   mutations: {
+    /**
+     * 设置vuex中的useRouter
+     */
+    setUseRouter(state, myRouter) {
+      state.useRouter = myRouter
+    },
+
     triggerSidebarOpened(state) {
       state.sidebarOpened = !state.sidebarOpened
     },
+
     /**
-     * 设置国际化
-     */
-    setLanguage(state, lang) {
-      setItem(LANG, lang)
-      state.language = lang
+   * 初始化 tagsList
+   */
+    initTagsViewList(state) {
+      state.tagsViewList = []
     },
 
     /**

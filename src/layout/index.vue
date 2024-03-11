@@ -22,7 +22,6 @@ import Sidebar from './components/Sidebar'
 import TagsView from '@/components/TagsView'
 import AppMain from './components/AppMain'
 import variables from '@/style/variables.module.scss'
-console.log('variables:', variables)
 </script>
 
 <style scoped lang="scss">

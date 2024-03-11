@@ -5,12 +5,16 @@ import { MAIN_COLOR } from '@/constant'
 // 快捷访问
 
 const getters = {
+  routes: state => state.permission.routes,
+  isRefresh: state => {
+    return state.getters.isRefresh === true
+  },
   token: state => state.user.token,
+  useRouter: state => state.app.useRouter,
   /**
    * @returns true表示用户信息已存在
    */
   hasUserInfo: state => {
-    console.log('userInfo', state.user.userInfo)
     return JSON.stringify(state.user.userInfo) !== '{}'
   },
   userInfo: state => state.user.userInfo,

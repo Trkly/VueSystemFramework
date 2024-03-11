@@ -2,8 +2,8 @@
   <div class="user-manage-container">
     <el-card class="header">
       <div>
-        <el-button type="primary" @click="onImportExcelClick">excel 导入</el-button>
-        <el-button type="success" @click="onTOExcelClick">excel 导出</el-button>
+        <el-button type="primary" @click="onImportExcelClick" v-permission="['importUser']">excel 导入</el-button>
+        <el-button type="success" @click="onToExcelClick">excel 导出</el-button>
       </div>
     </el-card>
     <el-card>
@@ -52,16 +52,17 @@
       </el-pagination>
     </el-card>
     <export-to-excel v-model="exportToExcelVisible"></export-to-excel>
-    <!-- <roles-dialog v-model="roleDialogVisible" :userId="selectUserId" @updateRole="getListData"></roles-dialog> -->
+    <roles-dialog v-model="roleDialogVisible" :userId="selectUserId" @updateRole="getListData"></roles-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, onActivated } from 'vue'
+import { ref, onActivated, watch } from 'vue'
 import { getUserManageList, deleteUser } from '@/api/user-manage'
 import { useRouter } from 'vue-router'
 import { ElMessageBox } from 'element-plus'
 import ExportToExcel from './components/Export2Excel.vue'
+import RolesDialog from './components/roles.vue'
 // 数据相关
 const tableData = ref([])
 const total = ref(0)
@@ -69,12 +70,13 @@ const page = ref(1)
 const size = ref(2)
 // 获取数据的方法
 const getListData = async () => {
-  const result = await getUserManageList({
+  const { data } = await getUserManageList({
     page: page.value,
     size: size.value
   })
-  tableData.value = result.list
-  total.value = result.total
+  console.log('result==', data)
+  tableData.value = data.list
+  total.value = data.total
 }
 getListData()
 // 分页相关
@@ -120,12 +122,35 @@ const onRemoveClick = row => {
 }
 
 /**
+ * 查看按钮点击事件
+ */
+const onShowClick = id => {
+  router.push(`/user/info/${id}`)
+}
+
+/**
  * excel 导出点击事件
  */
 const exportToExcelVisible = ref(false)
-const onTOExcelClick = () => {
+const onToExcelClick = () => {
   exportToExcelVisible.value = true
 }
+
+/**
+ * 查看角色的点击事件
+ */
+const selectUserId = ref('')
+const roleDialogVisible = ref(false)
+const onShowRoleClick = row => {
+  console.log('查看角色的点击事件:  ', row)
+  selectUserId.value = row._id
+  roleDialogVisible.value = true
+}
+
+// 保证每次打开重新获取用户角色数据
+watch(roleDialogVisible, val => {
+  if (!val) selectUserId.value = ''
+})
 </script>
 
 <style scoped lang="scss">

@@ -5,7 +5,6 @@ import request from '@/utils/request'
  * return promise实例对象
  */
 export const login = data => {
-  console.log(request)
   return request({
     url: '/users/login',
     method: 'POST',
@@ -16,7 +15,7 @@ export const login = data => {
 /**
  * 获取用户信息
  */
-export const getUserInfo = () => {
+export const getUserInfoData = () => {
   return request({
     url: '/users/profile',
     method: 'GET'

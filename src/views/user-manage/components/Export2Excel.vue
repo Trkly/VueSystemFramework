@@ -34,7 +34,8 @@ excelName.value = exportDefaultName
 const loading = ref(false)
 const onConfirm = async () => {
   loading.value = true
-  const allUser = (await getUserManageAllList()).list
+  const { result } = await getUserManageAllList()
+  const allUser = result.list
   // 导入工具包
   const excel = await import('@/utils/Export2Excel')
   const data = formatJson(USER_RELATIONS, allUser)

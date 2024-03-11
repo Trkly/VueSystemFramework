@@ -1,4 +1,4 @@
-import { login, getUserInfo } from '@/api/users'
+import { login, getUserInfoData } from '@/api/users'
 import { setItem, getItem, removeAllItem } from '@/utils/storage'
 import { TOKEN, USERINFO } from '@/constant'
 import router, { resetRouter } from '@/router'
@@ -7,7 +7,8 @@ export default {
   namespaced: true,
   state: () => ({
     token: getItem(TOKEN) || '',
-    userInfo: getItem(USERINFO) || {}
+    userInfo: getItem(USERINFO) || {},
+    isRefresh: true
   }),
   mutations: {
     setToken(state, token) {
@@ -52,9 +53,10 @@ export default {
      * @returns 用户信息
      */
     async getUserInfo(context) {
-      const res = await getUserInfo()
+      const res = await getUserInfoData()
+      console.log('获取到的用户信息是==', res)
       this.commit('user/setUserInfo', res.result)
-      return res
+      return res.result
     },
 
     /**
@@ -64,9 +66,10 @@ export default {
       resetRouter()
       this.commit('user/setToken', '')
       this.commit('user/setUserInfo', {})
+      this.commit('app/initTagsViewList')
       removeAllItem()
       // TODO: 清理掉权限相关配置
-      router.push('/login')
+      router.push({ path: '/login', query: { q: Math.random() } })
     }
 
   }
