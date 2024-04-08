@@ -36,7 +36,9 @@ export default {
           password
         }).then(data => {
           console.log('data:', data.result.token)
+          // 用户登录后设置token保存到浏览器内存
           this.commit('user/setToken', data.result.token)
+          // 跳转到首页
           router.push('/')
           // 保存登录时间
           setTimeStamp()
@@ -54,7 +56,7 @@ export default {
      */
     async getUserInfo(context) {
       const res = await getUserInfoData()
-      console.log('获取到的用户信息是==', res)
+      console.log('获取到的用户信息是==', res.result)
       this.commit('user/setUserInfo', res.result)
       return res.result
     },

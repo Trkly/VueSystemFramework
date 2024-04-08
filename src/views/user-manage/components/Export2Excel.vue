@@ -36,9 +36,11 @@ const onConfirm = async () => {
   loading.value = true
   const { result } = await getUserManageAllList()
   const allUser = result.list
+  console.log('allUser==', allUser)
   // 导入工具包
   const excel = await import('@/utils/Export2Excel')
   const data = formatJson(USER_RELATIONS, allUser)
+  console.log('data==', data)
   excel.export_json_to_excel({
     // excel 表头
     header: Object.keys(USER_RELATIONS),

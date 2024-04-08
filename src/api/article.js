@@ -27,7 +27,11 @@ export const articleSort = data => {
  */
 export const articleDetail = articleId => {
   return request({
-    url: `/article/${articleId}`
+    url: '/article/detail',
+    params: {
+      id: articleId
+    },
+    method: 'GET'
   })
 }
 
@@ -36,7 +40,11 @@ export const articleDetail = articleId => {
  */
 export const deleteArticle = articleId => {
   return request({
-    url: `/article/delete/${articleId}`
+    url: '/article/delete',
+    params: {
+      articleId: articleId
+    },
+    method: 'GET'
   })
 }
 

@@ -53,8 +53,8 @@ const initEditor = () => {
 watch(
   () => props.detail,
   val => {
-    if (val && val.content) {
-      mkEditor.setHTML(val.content)
+    if (val && val.articleContent) {
+      mkEditor.setHTML(val.articleContent)
     }
   },
   {
@@ -64,16 +64,20 @@ watch(
 
 // 处理提交
 const onSubmitClick = async () => {
-  if (props.detail && props.detail._id) {
+  console.log('获取到的文章参数是==', props)
+  console.log('文章详情是==', props.detail.articleContent)
+  if (props.detail && props.detail.id) {
     // 编辑文章
     await editArticle({
-      id: props.detail._id,
+      id: props.detail.id,
       title: props.title,
       content: mkEditor.getHTML()
     })
   } else {
+    console.log('我要创建文章==', mkEditor.getHTML())
     // 创建文章
     await commitArticle({
+      author: store.getters.userInfo.username,
       title: props.title,
       content: mkEditor.getHTML()
     })

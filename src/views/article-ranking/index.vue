@@ -12,7 +12,10 @@
       <el-table ref="tableRef" :data="tableData" border>
         <el-table-column v-for="(item, index) in tableColumns" :key="index" :prop="item.prop" :label="item.label">
           <template #default="{ row }" v-if="item.prop === 'publicDate'">
-            {{ $filters.relativeTime(row.publicDate) }}
+            {{ $filters.dateFilter(row.publicDate) }}
+          </template>
+          <template #default v-else-if="item.prop === 'ranking'">
+            {{ index + 1 }}
           </template>
           <template #default="{ row }" v-else-if="item.prop === 'action'">
             <el-button type="primary" size="small" @click="onShowClick(row)">查看</el-button>
@@ -89,7 +92,7 @@ const handleCurrentChange = currentPage => {
  */
 const router = useRouter()
 const onShowClick = row => {
-  router.push(`/article/${row._id}`)
+  router.push(`/article/${row.id}`)
 }
 
 // 删除用户
@@ -97,7 +100,7 @@ const onRemoveClick = row => {
   ElMessageBox.confirm('确定要删除文章' + row.title + '吗？', {
     type: 'warning'
   }).then(async () => {
-    await deleteArticle(row._id)
+    await deleteArticle(row.id)
     ElMessage.success('文章删除成功')
     // 重新渲染数据
     getListData()
@@ -120,7 +123,7 @@ const onRemoveClick = row => {
     }
   }
 
-  ::v-deep .el-table__row {
+  :v-deep(.el-table__row) {
     cursor: pointer;
   }
 
@@ -130,7 +133,7 @@ const onRemoveClick = row => {
   }
 }
 
-::v-deep .sortable-ghost {
+:v-deep(.sortable-ghost) {
   opacity: 0.6;
   color: #fff !important;
   background: #304156 !important;

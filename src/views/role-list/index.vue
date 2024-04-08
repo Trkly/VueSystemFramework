@@ -3,8 +3,8 @@
     <el-card>
       <el-table :data="allRoles" border style="width: 100%">
         <el-table-column label="序号" type="index" width="120"> </el-table-column>
-        <el-table-column label="名称" prop="title"> </el-table-column>
-        <el-table-column label="描述" prop="describe"> </el-table-column>
+        <el-table-column label="名称" prop="name"> </el-table-column>
+        <el-table-column label="描述" prop="desc"> </el-table-column>
         <el-table-column label="操作" prop="action" width="260" #default="{ row }">
           <el-button
             type="primary"
@@ -29,8 +29,9 @@ import DistributePermission from './components/DistributePermission.vue'
 
 const allRoles = ref([])
 const getRoleList = async () => {
-  const { data } = await roleList()
-  allRoles.value = data.data
+  const { result } = await roleList()
+  console.log('result====', result)
+  allRoles.value = result
 }
 getRoleList()
 
@@ -38,7 +39,7 @@ getRoleList()
  * 分配权限
  */
 const distributePermissionVisible = ref(false)
-const selectRoleId = ref('')
+const selectRoleId = ref(NaN)
 const onDistributePermissionClick = row => {
   selectRoleId.value = row.id
   distributePermissionVisible.value = true

@@ -14,7 +14,9 @@ const router = useRouter()
  * 数据解析成功之后的回调
  */
 const onSuccess = async ({ header, results }) => {
+  console.log('results==', results)
   const updateData = generateData(results)
+  console.log('updateData==', updateData)
   await userBatchImport(updateData)
   ElMessage.success({
     message: results.length + ' 条员工数据导入成功',
@@ -27,6 +29,7 @@ const onSuccess = async ({ header, results }) => {
  * 筛选数据
  */
 const generateData = results => {
+  console.log('AAAAAA')
   const arr = []
   results.forEach(item => {
     const userInfo = {}

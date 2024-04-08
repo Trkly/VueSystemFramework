@@ -11,7 +11,7 @@
 import E from 'wangeditor'
 import { onMounted, defineProps, defineEmits, watch } from 'vue'
 import { commitArticle, editArticle } from './commit'
-
+import { useStore } from 'vuex'
 const props = defineProps({
   title: {
     required: true,
@@ -49,26 +49,29 @@ const initEditor = () => {
 watch(
   () => props.detail,
   val => {
-    if (val && val.content) {
-      editor.txt.html(val.content)
+    if (val && val.articleContent) {
+      editor.txt.html(val.articleContent)
     }
   },
   {
     immediate: true
   }
 )
-
+const store = useStore()
 const onSubmitClick = async () => {
-  if (props.detail && props.detail._id) {
+  console.log('获取到的编号是==', props.detail)
+  console.log('文章详情是==', props.title)
+  if (props.detail && props.detail.id) {
     // 编辑文章
     await editArticle({
-      id: props.detail._id,
+      id: props.detail.id,
       title: props.title,
       content: editor.txt.html()
     })
   } else {
     // 创建文章
     await commitArticle({
+      author: store.getters.userInfo.username,
       title: props.title,
       content: editor.txt.html()
     })

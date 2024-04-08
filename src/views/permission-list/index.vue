@@ -9,9 +9,9 @@
         default-expand-all
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       >
-        <el-table-column prop="permissionName" label="权限名称" width="180"> </el-table-column>
-        <el-table-column prop="permissionMark" label="权限标识" width="180"> </el-table-column>
-        <el-table-column prop="permissionDesc" label="权限描述" width="180"> </el-table-column>
+        <el-table-column prop="name" label="权限名称" width="180"> </el-table-column>
+        <el-table-column prop="mark" label="权限标识" width="180"> </el-table-column>
+        <el-table-column prop="desc" label="权限描述" width="180"> </el-table-column>
       </el-table>
     </el-card>
   </div>
@@ -31,7 +31,7 @@ import { ref } from 'vue'
 const allPermission = ref([])
 const getPermissionList = async () => {
   const { result } = await permissionList()
-  allPermission.value = result.data
+  allPermission.value = result
   console.log('permissionList==', allPermission.value)
 }
 getPermissionList()

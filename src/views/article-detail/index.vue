@@ -3,10 +3,10 @@
     <h2 class="title">{{ detail.title }}</h2>
     <div class="header">
       <span class="author">作者：{{ detail.author }}</span>
-      <span class="time">发布时间：{{ $filters.relativeTime(detail.publicDate) }}</span>
+      <span class="time">发布时间：{{ $filters.dateFilter(detail.publicDate) }}</span>
       <el-button type="text" class="edit" @click="onEditClick">编辑</el-button>
     </div>
-    <div class="content" v-html="detail.content"></div>
+    <div class="content" v-html="detail.articleContent"></div>
   </div>
 </template>
 
@@ -20,7 +20,10 @@ const route = useRoute()
 const articleId = route.params.id
 const detail = ref({})
 const getArticleDetail = async () => {
-  detail.value = await articleDetail(articleId)
+  console.log('articleId==', articleId)
+  const { result } = await articleDetail(articleId)
+  console.log('result==', result)
+  detail.value = result
 }
 getArticleDetail()
 

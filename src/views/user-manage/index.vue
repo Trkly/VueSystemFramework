@@ -13,7 +13,7 @@
         <el-table-column prop="mobile" label="联系方式"></el-table-column>
         <el-table-column label="头像" align="center">
           <template #default="{ row }">
-            <el-image class="avatar" :src="row.avatar" :preview-src-list="[row.avatar]"></el-image>
+            <el-image class="avatar" :src="row.avatar"></el-image>
           </template>
         </el-table-column>
         <el-table-column label="角色">
@@ -26,14 +26,14 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="开通时间">
-          <template #default="{ row }">
-            {{ $filters.dateFilter(row.openTime) }}
-          </template>
-        </el-table-column>
+        <!--        <el-table-column label="开通时间">-->
+        <!--          <template #default="{ row }">-->
+        <!--            {{ $filters.dateFilter(row.openTime) }}-->
+        <!--          </template>-->
+        <!--        </el-table-column>-->
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
-            <el-button type="primary" size="small" @click="onShowClick(row._id)">查看</el-button>
+            <el-button type="primary" size="small" @click="onShowClick(row)">查看</el-button>
             <el-button type="info" size="small" @click="onShowRoleClick(row)" v-permission="['distributeRole']">角色</el-button>
             <el-button type="danger" size="small" @click="onRemoveClick(row)" v-permission="['removeUser']">删除</el-button>
           </template>
@@ -60,7 +60,7 @@
 import { ref, onActivated, watch } from 'vue'
 import { getUserManageList, deleteUser } from '@/api/user-manage'
 import { useRouter } from 'vue-router'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElMessage } from 'element-plus'
 import ExportToExcel from './components/Export2Excel.vue'
 import RolesDialog from './components/roles.vue'
 // 数据相关
@@ -70,13 +70,13 @@ const page = ref(1)
 const size = ref(2)
 // 获取数据的方法
 const getListData = async () => {
-  const { data } = await getUserManageList({
+  const { result } = await getUserManageList({
     page: page.value,
     size: size.value
   })
-  console.log('result==', data)
-  tableData.value = data.list
-  total.value = data.total
+  console.log('result==', result)
+  tableData.value = result.list
+  total.value = result.total
 }
 getListData()
 // 分页相关
@@ -112,11 +112,16 @@ onActivated(getListData)
  */
 const onRemoveClick = row => {
   ElMessageBox.confirm('确定要删除用户 ' + row.username + ' 吗？', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
     type: 'warning'
   }).then(async () => {
-    await deleteUser(row._id)
-    ElMessageBox.success('删除成功')
-    // 重新渲染数据
+    console.log('要删除的行是==', row)
+    await deleteUser(row.id)
+    ElMessage({
+      type: 'success',
+      message: '删除成功'
+    })
     getListData()
   })
 }
@@ -142,8 +147,8 @@ const onToExcelClick = () => {
 const selectUserId = ref('')
 const roleDialogVisible = ref(false)
 const onShowRoleClick = row => {
-  console.log('查看角色的点击事件:  ', row)
-  selectUserId.value = row._id
+  console.log('查看角色的点击事件:  ', row.id)
+  selectUserId.value = row.id.toString()
   roleDialogVisible.value = true
 }
 
@@ -159,13 +164,13 @@ watch(roleDialogVisible, val => {
     margin-bottom: 22px;
     text-align: right;
   }
-  ::v-deep .avatar {
+  :v-deep(.avatar) {
     width: 60px;
     height: 60px;
     border-radius: 50%;
   }
 
-  ::v-deep .el-tag {
+  :v-deep(.el-tag) {
     margin-right: 6px;
   }
 

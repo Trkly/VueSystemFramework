@@ -6,7 +6,8 @@ import request from '@/utils/request'
 export const getUserManageList = data => {
   return request({
     url: '/user-manage/list',
-    params: data
+    method: 'POST',
+    data
   })
 }
 
@@ -15,7 +16,7 @@ export const getUserManageList = data => {
  */
 export const userBatchImport = data => {
   return request({
-    url: '/user-manage/batch/import',
+    url: '/user-manage/batchImport',
     method: 'POST',
     data
   })
@@ -26,7 +27,11 @@ export const userBatchImport = data => {
  */
 export const deleteUser = id => {
   return request({
-    url: `/user-manage/delete/${id}`
+    url: '/user-manage/delete',
+    params: {
+      id: id
+    },
+    method: 'GET'
   })
 }
 
@@ -35,7 +40,8 @@ export const deleteUser = id => {
  */
 export const getUserManageAllList = () => {
   return request({
-    url: '/user-manage/all-list'
+    url: '/user-manage/all-list',
+    method: 'GET'
   })
 }
 
@@ -68,12 +74,11 @@ export const userRoles = id => {
 /**
  * 分用户分配角色
  */
-export const updateRole = (id, roles) => {
+export const updateRole = data => {
+  console.log(data)
   return request({
-    url: `/user-manage/update-role/${id}`,
+    url: '/user-manage/update-role',
     method: 'POST',
-    data: {
-      roles
-    }
+    data
   })
 }

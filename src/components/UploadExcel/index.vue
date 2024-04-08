@@ -78,15 +78,19 @@ const handleChange = e => {
  * 触发上传事件
  */
 const upload = rawFile => {
+  console.log('上传时的rawFile是==', rawFile)
   excelUploadInput.value.value = null
   // 如果没有指定上传前回调的话
+  console.log(!props.beforeUpload)
   if (!props.beforeUpload) {
+    console.log('没有指定上传前回调')
     readerData(rawFile)
     return
   }
   // 如果指定了上传前回调，那么只有返回 true 才会执行后续操作
   const before = props.beforeUpload(rawFile)
   if (before) {
+    console.log('已经指定上传前回调')
     readerData(rawFile)
   }
 }

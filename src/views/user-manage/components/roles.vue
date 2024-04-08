@@ -1,8 +1,8 @@
 <template>
   <el-dialog title="配置角色" :model-value="modelValue" @close="closed">
-    <el-checkbox-group v-model="userRoleTitleList">
-      <el-checkbox v-for="item in allRoleList" :key="item.id" :label="item.title">{{ item.title }}</el-checkbox>
-    </el-checkbox-group>
+    <el-radio-group v-model="userRoleTitle">
+      <el-radio v-for="item in allRoleList" :key="item.id" :label="item.name">{{ item.name }}</el-radio>
+    </el-radio-group>
 
     <template #footer>
       <span class="dialog-footer">
@@ -36,8 +36,9 @@ const emits = defineEmits(['update:modelValue', 'updateRole'])
 const allRoleList = ref([])
 // 获取所有角色数据的方法
 const getListData = async () => {
-  const { data } = await roleList()
-  allRoleList.value = data.data
+  const { result } = await roleList()
+  console.log('获取到的所有角色列表是==', result)
+  allRoleList.value = result
   console.log('allRoleList.value==', allRoleList.value)
 }
 onMounted(() => {
@@ -45,14 +46,13 @@ onMounted(() => {
 })
 
 // 当前用户角色
-const userRoleTitleList = ref([])
+const userRoleTitle = ref('')
 // 获取当前用户角色
 const getUserRoles = async () => {
   const { result } = await userRoles(props.userId)
   console.log('获取到的当前用户是==', result)
-  console.log('权限获得到的是==', result.role)
-  userRoleTitleList.value = result.role.map(item => item.title)
-  console.log('userRoleTitleList.value==', userRoleTitleList.value)
+  userRoleTitle.value = result.name
+  console.log('userRoleTitle.value==', userRoleTitle.value)
 }
 watch(
   () => props.userId,
@@ -65,13 +65,16 @@ watch(
   确定按钮点击事件
  */
 const onConfirm = async () => {
+  console.log('你哈==', userRoleTitle.value)
+  console.log('allRoleList.value==', allRoleList.value)
   // 处理数据结构
-  const roles = userRoleTitleList.value.map(title => {
-    return allRoleList.value.find(role => role.title === title)
-  })
+  const roles = allRoleList.value.find(role => role.name === userRoleTitle.value)
   console.log('选择的用户权限是==', roles)
-  await updateRole(props.userId, roles)
-
+  const data = {
+    id: props.userId,
+    role: roles
+  }
+  await updateRole(data)
   ElMessage.success('用户角色更新成功')
   closed()
   // 角色更新成功

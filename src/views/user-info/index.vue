@@ -37,16 +37,14 @@
                 </li>
               </ul>
             </el-descriptions-item>
-            <el-descriptions-item label="专业">
-              {{ detailData.major }}
+            <el-descriptions-item label="特长">
+              {{ detailData.talent }}
             </el-descriptions-item>
             <el-descriptions-item label="荣耀">
               {{ detailData.glory }}
             </el-descriptions-item>
           </el-descriptions>
         </div>
-        <!-- 尾部签名 -->
-        <!-- <div class="foot">签字：___________日期:___________</div> -->
       </div>
     </el-card>
   </div>
@@ -74,15 +72,14 @@ getUserDetail()
 
 <style lang="scss" scoped>
 .user-info-box {
-  width: 1024px;
-  margin: 0 auto;
+  width: 100%;
   .title {
     text-align: center;
     margin-bottom: 18px;
   }
   .header {
     display: flex;
-    ::v-deep .el-descriptions {
+    :v-deep(.el-descriptions) {
       flex-grow: 1;
     }
     .avatar {
